@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This template creates an EC2 instance to run a static website application deployed with Apache Web Server
+Resources:
+  FeyzInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-08c148bb835696b45
+      InstanceType: t2.micro
+      KeyName: FeyzKeyName
+      SecurityGroups:
+        - WebServerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: InstancePropTagsValue
+      UserData: 
+        Fn::Base64:
+          !Sub |
+            #! /bin/bash
+            yum update -y
+            yum install python3 -y
+            yum install -y httpd
+            chmod 777 /var/www/html/ -R
+            sudo systemctl start httpd
+            sudo systemctl enable httpd
+            cd /var/www/html/
+            wget https://raw.githubusercontent.com/flovearth/40_Static_Website_on_AWS_EC2_using_Cloudformation_with_ApacheWS/master/static-web/index.html
+            wget https://raw.githubusercontent.com/flovearth/40_Static_Website_on_AWS_EC2_using_Cloudformation_with_ApacheWS/master/static-web/cat0.jpg
+            wget https://raw.githubusercontent.com/flovearth/40_Static_Website_on_AWS_EC2_using_Cloudformation_with_ApacheWS/master/static-web/cat1.jpg
+            wget https://raw.githubusercontent.com/flovearth/40_Static_Website_on_AWS_EC2_using_Cloudformation_with_ApacheWS/master/static-web/cat2.jpg
