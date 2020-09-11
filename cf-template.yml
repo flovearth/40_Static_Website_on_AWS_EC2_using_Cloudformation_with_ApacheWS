@@ -6,7 +6,7 @@ Resources:
     Properties:
       ImageId: ami-08c148bb835696b45
       InstanceType: t2.micro
-      KeyName: FeyzKeyName
+      KeyName: 20200824
       SecurityGroups:
         - WebServerSecurityGroup
       Tags:
